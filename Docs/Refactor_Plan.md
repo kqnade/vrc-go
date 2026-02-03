@@ -251,6 +251,7 @@ github.com/kqnade/vrcgo/
            log.Fatal(err)
        }
 
+       // 認証情報はコードに直書きせず、環境変数などで安全に管理する。
        username := os.Getenv("VRCHAT_USERNAME")
        password := os.Getenv("VRCHAT_PASSWORD")
        if username == "" || password == "" {
@@ -263,8 +264,6 @@ github.com/kqnade/vrcgo/
        }); err != nil {
            log.Fatal(err)
        }
-
-       // 認証情報はコードに直書きせず、環境変数などで安全に管理する。
 
        wsClient, err := vrcws.New(ctx, apiClient)
        if err != nil {
@@ -311,9 +310,15 @@ github.com/kqnade/vrcgo/
            log.Fatal(err)
        }
 
+       username := os.Getenv("VRCHAT_USERNAME")
+       password := os.Getenv("VRCHAT_PASSWORD")
+       if username == "" || password == "" {
+           log.Fatal("VRCHAT_USERNAME and VRCHAT_PASSWORD must be set")
+       }
+
        if err := client.Authenticate(ctx, vrcapi.AuthConfig{
-           Username: "your-username",
-           Password: "your-password",
+           Username: username,
+           Password: password,
        }); err != nil {
            log.Fatal(err)
        }
@@ -342,9 +347,15 @@ github.com/kqnade/vrcgo/
            log.Fatal(err)
        }
 
+       username := os.Getenv("VRCHAT_USERNAME")
+       password := os.Getenv("VRCHAT_PASSWORD")
+       if username == "" || password == "" {
+           log.Fatal("VRCHAT_USERNAME and VRCHAT_PASSWORD must be set")
+       }
+
        if err := apiClient.Authenticate(ctx, vrcapi.AuthConfig{
-           Username: "your-username",
-           Password: "your-password",
+           Username: username,
+           Password: password,
        }); err != nil {
            log.Fatal(err)
        }
