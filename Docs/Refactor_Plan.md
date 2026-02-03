@@ -75,7 +75,7 @@ github.com/kqnade/vrcgo/
 
 1. `go.mod` の module 行を変更：
 
-   ```go
+   ```mod
    module github.com/kqnade/vrcgo
    ```
 
@@ -225,9 +225,7 @@ github.com/kqnade/vrcgo/
    func main() {
        ctx := context.Background()
 
-       apiClient, err := vrcapi.NewClient(
-           vrcapi.WithUserAgent("my-app/1.0"),
-       )
+       apiClient, err := vrcapi.NewClient()
        if err != nil {
            log.Fatal(err)
        }
@@ -277,7 +275,9 @@ github.com/kqnade/vrcgo/
    func main() {
        ctx := context.Background()
 
-       client, err := vrcapi.NewClient()
+       client, err := vrcapi.NewClient(
+           vrcapi.WithUserAgent("my-app/1.0"),
+       )
        if err != nil {
            log.Fatal(err)
        }
@@ -306,10 +306,21 @@ github.com/kqnade/vrcgo/
    func main() {
        ctx := context.Background()
 
-       apiClient, _ := vrcapi.NewClient()
-       apiClient.Authenticate(ctx, vrcapi.AuthConfig{...})
+       apiClient, err := vrcapi.NewClient(
+           vrcapi.WithUserAgent("my-app/1.0"),
+       )
+       if err != nil {
+           log.Fatal(err)
+       }
 
-       wsClient, _ := vrcws.New(ctx, apiClient)
+       if err := apiClient.Authenticate(ctx, vrcapi.AuthConfig{...}); err != nil {
+           log.Fatal(err)
+       }
+
+       wsClient, err := vrcws.New(ctx, apiClient)
+       if err != nil {
+           log.Fatal(err)
+       }
 
        wsClient.OnFriendOnline(func(ev shared.FriendOnlineEvent) {
            log.Printf("%s is now online at %s", ev.UserID, ev.Location)
