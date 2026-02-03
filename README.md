@@ -9,6 +9,7 @@ VRChat APIの非公式Goクライアントライブラリ
 - 2要素認証対応
 - 型安全なエラーハンドリング
 - 設定可能なHTTPクライアント（プロキシ、タイムアウト、User-Agent）
+- **WebSocketサポート** - リアルタイムイベント受信（通知、フレンド状態、ロケーション変更など）
 
 ## Installation
 
@@ -82,6 +83,35 @@ client, err := vrchat.NewClient(
 )
 ```
 
+### WebSocketでリアルタイムイベントを受信
+
+```go
+// WebSocket接続
+ws, err := client.ConnectWebSocket(context.Background())
+if err != nil {
+    log.Fatal(err)
+}
+defer ws.Close()
+
+// フレンドがオンラインになったときの処理
+ws.OnFriendOnline(func(friend vrchat.FriendOnlineEvent) {
+    log.Printf("%s is now online at %s", friend.UserID, friend.Location)
+})
+
+// 通知を受信
+ws.OnNotification(func(notification vrchat.NotificationEvent) {
+    log.Printf("Notification: %s", notification.Message)
+})
+
+// すべてのイベントをログ
+ws.On("*", func(event vrchat.Event) {
+    log.Printf("Event: %s", event.Type)
+})
+
+// 接続を維持
+ws.Wait()
+```
+
 ## Examples
 
 サンプルコードは `examples/` ディレクトリにあります：
@@ -94,6 +124,11 @@ make run-basic-auth
 
 # Cookie認証の例
 make run-cookie-auth
+
+# WebSocketでリアルタイムイベントを受信
+export VRCHAT_USERNAME="your-username"
+export VRCHAT_PASSWORD="your-password"
+make run-websocket
 ```
 
 ## API
@@ -223,6 +258,40 @@ make run-cookie-auth
 
 - `SaveCookies(path)` - Cookieをファイルに保存
 - `LoadCookies(path)` - Cookieをファイルから読み込み
+
+### WebSocket (リアルタイムイベント)
+
+- `ConnectWebSocket(ctx)` - WebSocket接続を確立
+- `ws.On(eventType, handler)` - イベントハンドラーを登録
+- `ws.OnNotification(handler)` - 通知イベント
+- `ws.OnFriendOnline(handler)` - フレンドオンラインイベント
+- `ws.OnFriendOffline(handler)` - フレンドオフラインイベント
+- `ws.OnFriendLocation(handler)` - フレンドロケーション変更イベント
+- `ws.OnFriendActive(handler)` - フレンドアクティブイベント
+- `ws.OnFriendAdd(handler)` - フレンド追加イベント
+- `ws.OnFriendDelete(handler)` - フレンド削除イベント
+- `ws.OnUserUpdate(handler)` - ユーザー更新イベント
+- `ws.Close()` - WebSocket接続を閉じる
+- `ws.Wait()` - 接続終了まで待機
+
+**対応イベント一覧:**
+- `notification` - 通知
+- `friend-online` - フレンドがオンラインに
+- `friend-offline` - フレンドがオフラインに
+- `friend-active` - フレンドがアクティブに
+- `friend-location` - フレンドのロケーション変更
+- `friend-add` - フレンド追加
+- `friend-delete` - フレンド削除
+- `friend-update` - フレンド情報更新
+- `user-update` - ユーザー情報更新
+- `user-location` - ユーザーロケーション変更
+- `notification-v2` - 通知V2
+- `notification-v2-update` - 通知V2更新
+- `notification-v2-delete` - 通知V2削除
+- `group-joined` - グループ参加
+- `group-left` - グループ脱退
+- `group-member-updated` - グループメンバー更新
+- `group-role-updated` - グループロール更新
 
 ### エラーハンドリング
 

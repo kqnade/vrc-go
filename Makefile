@@ -30,6 +30,10 @@ run-basic-auth:
 run-cookie-auth:
 	cd examples/cookie_auth && go run main.go
 
+.PHONY: run-websocket
+run-websocket:
+	cd examples/websocket && go run main.go
+
 .PHONY: clean
 clean:
 	rm -f examples/*/cookies.json
