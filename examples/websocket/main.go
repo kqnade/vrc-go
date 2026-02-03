@@ -9,7 +9,9 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/kqnade/vrc-go/vrchat"
+	"github.com/kqnade/vrcgo/shared"
+	"github.com/kqnade/vrcgo/vrcapi"
+	"github.com/kqnade/vrcgo/vrcws"
 )
 
 func main() {
@@ -23,14 +25,14 @@ func main() {
 	}
 
 	// クライアント作成
-	client, err := vrchat.NewClient()
+	client, err := vrcapi.NewClient()
 	if err != nil {
 		log.Fatalf("Failed to create client: %v", err)
 	}
 
 	// 認証
 	fmt.Println("🔐 Authenticating...")
-	err = client.Authenticate(context.Background(), vrchat.AuthConfig{
+	err = client.Authenticate(context.Background(), shared.AuthConfig{
 		Username: username,
 		Password: password,
 		TOTPCode: totpCode,
@@ -49,7 +51,7 @@ func main() {
 
 	// WebSocket接続
 	fmt.Println("🔌 Connecting to WebSocket...")
-	ws, err := client.ConnectWebSocket(context.Background())
+	ws, err := vrcws.New(context.Background(), client)
 	if err != nil {
 		log.Fatalf("Failed to connect websocket: %v", err)
 	}
@@ -58,19 +60,19 @@ func main() {
 	fmt.Println("\n📡 Listening for events... (Press Ctrl+C to exit)")
 
 	// すべてのイベントをログ
-	ws.On("*", func(event vrchat.Event) {
+	ws.On("*", func(event shared.Event) {
 		fmt.Printf("📨 Event [%s]: %s\n", event.Type, string(event.Content))
 	})
 
 	// 通知イベント
-	ws.OnNotification(func(notification vrchat.NotificationEvent) {
+	ws.OnNotification(func(notification shared.NotificationEvent) {
 		fmt.Printf("🔔 Notification: %s from %s\n", notification.Type, notification.SenderUsername)
 		data, _ := json.MarshalIndent(notification, "  ", "  ")
 		fmt.Printf("  %s\n\n", data)
 	})
 
 	// フレンドオンライン
-	ws.OnFriendOnline(func(friend vrchat.FriendOnlineEvent) {
+	ws.OnFriendOnline(func(friend shared.FriendOnlineEvent) {
 		userName := friend.UserID
 		if friend.User != nil {
 			userName = friend.User.DisplayName
@@ -79,12 +81,12 @@ func main() {
 	})
 
 	// フレンドオフライン
-	ws.OnFriendOffline(func(friend vrchat.FriendOfflineEvent) {
+	ws.OnFriendOffline(func(friend shared.FriendOfflineEvent) {
 		fmt.Printf("❌ Friend Offline: %s\n\n", friend.UserID)
 	})
 
 	// フレンドロケーション変更
-	ws.OnFriendLocation(func(friend vrchat.FriendLocationEvent) {
+	ws.OnFriendLocation(func(friend shared.FriendLocationEvent) {
 		userName := friend.UserID
 		if friend.User != nil {
 			userName = friend.User.DisplayName
@@ -93,17 +95,21 @@ func main() {
 	})
 
 	// フレンド追加
-	ws.OnFriendAdd(func(content vrchat.EventContent) {
-		fmt.Printf("➕ Friend Added: %s (%s)\n\n", content.DisplayName, content.UserID)
+	ws.OnFriendAdd(func(event shared.FriendAddEvent) {
+		userName := event.UserID
+		if event.User != nil {
+			userName = event.User.DisplayName
+		}
+		fmt.Printf("➕ Friend Added: %s (%s)\n\n", userName, event.UserID)
 	})
 
 	// フレンド削除
-	ws.OnFriendDelete(func(content vrchat.EventContent) {
-		fmt.Printf("➖ Friend Deleted: %s (%s)\n\n", content.DisplayName, content.UserID)
+	ws.OnFriendDelete(func(event shared.FriendDeleteEvent) {
+		fmt.Printf("➖ Friend Deleted: %s\n\n", event.UserID)
 	})
 
 	// ユーザー更新
-	ws.OnUserUpdate(func(user vrchat.UserUpdateEvent) {
+	ws.OnUserUpdate(func(user shared.UserUpdateEvent) {
 		fmt.Printf("👤 User Update: %s\n\n", user.UserID)
 	})
 
