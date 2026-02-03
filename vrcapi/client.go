@@ -1,4 +1,4 @@
-package vrchat
+package vrcapi
 
 import (
 	"bytes"
@@ -8,9 +8,12 @@ import (
 	"io"
 	"net/http"
 	"net/http/cookiejar"
+	"net/url"
 	"time"
 
 	"golang.org/x/net/publicsuffix"
+
+	"github.com/kqnade/vrcgo/shared"
 )
 
 const (
@@ -28,7 +31,7 @@ type Client struct {
 }
 
 // NewClient は新しいVRChat APIクライアントを作成します
-func NewClient(opts ...Option) (*Client, error) {
+func NewClient(opts ...shared.Option) (*Client, error) {
 	jar, err := cookiejar.New(&cookiejar.Options{
 		PublicSuffixList: publicsuffix.List,
 	})
@@ -36,18 +39,41 @@ func NewClient(opts ...Option) (*Client, error) {
 		return nil, fmt.Errorf("failed to create cookie jar: %w", err)
 	}
 
-	c := &Client{
-		httpClient: &http.Client{
-			Jar:     jar,
-			Timeout: time.Minute,
-		},
-		baseURL:   DefaultBaseURL,
-		userAgent: DefaultUserAgent,
+	config := &shared.ClientConfig{
+		UserAgent: DefaultUserAgent,
+		Timeout:   time.Minute,
+		BaseURL:   DefaultBaseURL,
 	}
 
 	// オプション適用
 	for _, opt := range opts {
-		opt(c)
+		opt(config)
+	}
+
+	// HTTPクライアントの設定
+	var httpClient *http.Client
+	if config.HTTPClient != nil {
+		httpClient = config.HTTPClient
+		if httpClient.Jar == nil {
+			httpClient.Jar = jar
+		}
+	} else {
+		httpClient = &http.Client{
+			Jar:     jar,
+			Timeout: config.Timeout,
+		}
+		if config.Proxy != nil {
+			transport := &http.Transport{
+				Proxy: http.ProxyURL(config.Proxy),
+			}
+			httpClient.Transport = transport
+		}
+	}
+
+	c := &Client{
+		httpClient: httpClient,
+		baseURL:    config.BaseURL,
+		userAgent:  config.UserAgent,
 	}
 
 	return c, nil
@@ -89,12 +115,12 @@ func (c *Client) doRequest(ctx context.Context, method, path string, body interf
 			} `json:"error"`
 		}
 		if err := json.NewDecoder(resp.Body).Decode(&apiErr); err == nil && apiErr.Error.Message != "" {
-			return &APIError{
+			return &shared.APIError{
 				StatusCode: resp.StatusCode,
 				Message:    apiErr.Error.Message,
 			}
 		}
-		return &APIError{
+		return &shared.APIError{
 			StatusCode: resp.StatusCode,
 			Message:    resp.Status,
 		}
@@ -147,12 +173,12 @@ func (c *Client) doRequestWithBasicAuth(ctx context.Context, method, path, usern
 			} `json:"error"`
 		}
 		if err := json.NewDecoder(resp.Body).Decode(&apiErr); err == nil && apiErr.Error.Message != "" {
-			return &APIError{
+			return &shared.APIError{
 				StatusCode: resp.StatusCode,
 				Message:    apiErr.Error.Message,
 			}
 		}
-		return &APIError{
+		return &shared.APIError{
 			StatusCode: resp.StatusCode,
 			Message:    resp.Status,
 		}
@@ -166,4 +192,36 @@ func (c *Client) doRequestWithBasicAuth(ctx context.Context, method, path, usern
 	}
 
 	return nil
+}
+
+// GetAuthCookie はCookieJarから認証クッキーを取得します
+func (c *Client) GetAuthCookie() (string, error) {
+	u, err := c.baseURLParsed()
+	if err != nil {
+		return "", err
+	}
+
+	cookies := c.httpClient.Jar.Cookies(u)
+	for _, cookie := range cookies {
+		if cookie.Name == "auth" || cookie.Name == "authcookie" {
+			return cookie.Value, nil
+		}
+	}
+
+	return "", fmt.Errorf("auth cookie not found")
+}
+
+// baseURLParsed はベースURLをパースして返します
+func (c *Client) baseURLParsed() (*url.URL, error) {
+	return url.Parse(c.baseURL)
+}
+
+// SaveCookies はCookieをファイルに保存します
+func (c *Client) SaveCookies(path string) error {
+	return shared.SaveCookies(c.httpClient.Jar, c.baseURL, path)
+}
+
+// LoadCookies はCookieをファイルから読み込みます
+func (c *Client) LoadCookies(path string) error {
+	return shared.LoadCookies(c.httpClient.Jar, c.baseURL, path)
 }

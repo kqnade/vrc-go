@@ -44,28 +44,35 @@ make clean              # ビルド成果物とcookies.jsonを削除
 
 ### Core Components
 
-**Client (`vrchat/client.go`):**
+**REST API Client (`vrcapi/`):**
 - HTTPクライアントのラッパー
 - Cookie jarによるセッション管理 (`cookiejar.New` with publicsuffix)
 - すべてのAPI操作の基盤となる `doRequest()` と `doRequestWithBasicAuth()` メソッド
 - デフォルトのベースURL: `https://api.vrchat.cloud/api/1`
 
-**Authentication Flow (`vrchat/auth.go`):**
+**Authentication Flow (`vrcapi/auth.go`):**
 1. `Authenticate()` - Basic認証でログイン
-2. 2FAが必要な場合: `Verify2FA()` または `VerifyEmailOTP()` で完了
+2. 2FAが必要な場合: 内部的に `verifyTwoFactor()` で完了
 3. 認証後、CookieがHTTPクライアントのjarに保存される
 4. Cookie永続化: `SaveCookies()` / `LoadCookies()` でJSON形式で保存/読み込み
 
-**WebSocket Architecture (`vrchat/websocket.go`):**
-- `ConnectWebSocket()` で接続確立 (authCookieをクエリパラメータとして送信)
+**WebSocket Architecture (`vrcws/`):**
+- `vrcws.New(ctx, apiClient)` で接続確立 (authCookieをクエリパラメータとして送信)
 - イベント駆動型: `On()`, `OnNotification()`, `OnFriendOnline()` 等でハンドラー登録
 - 自動再接続機能 (指数バックオフ: 5秒から最大60秒)
 - ワイルドカード `"*"` ハンドラーですべてのイベントをキャッチ可能
 - `Wait()` でメインゴルーチンをブロック
 
+**Shared Package (`shared/`):**
+- 共通データ型: User, Avatar, World, Instance, Notification等
+- WebSocketイベント型: Event, FriendOnlineEvent等
+- エラー型: APIError
+- Cookie管理: SaveCookies(), LoadCookies()
+- クライアントオプション: Option, ClientConfig
+
 ### API Categories
 
-APIは機能別に分割されています:
+REST APIは機能別にファイルが分割されています (vrcapi/):
 
 | File | Responsibility |
 |------|----------------|
@@ -82,32 +89,34 @@ APIは機能別に分割されています:
 | `player_moderation.go` | ミュート、ブロック、アバター非表示 |
 | `system.go` | システム設定、ヘルスチェック、オンラインユーザー数 |
 
-### Error Handling (`vrchat/errors.go`)
+### Error Handling (`shared/errors.go`)
 
 `APIError` 型を使用し、HTTPステータスコードとメッセージを保持:
 - `IsAuthenticationError()` - 401エラー
 - `IsRateLimitError()` - 429エラー
 - `IsNotFoundError()` - 404エラー
-- すべてのエラーは `*APIError` 型として返される
+- すべてのエラーは `*shared.APIError` 型として返される
 
-### Options Pattern (`vrchat/options.go`)
+### Options Pattern (`shared/options.go`, `vrcapi/options.go`)
 
 `NewClient()` はfunctional options パターンを使用:
-- `WithUserAgent(ua string)` - User-Agentをカスタマイズ
-- `WithTimeout(timeout time.Duration)` - HTTPタイムアウト設定
-- `WithProxy(proxyURL string)` - プロキシ設定
+- `vrcapi.WithUserAgent(ua string)` - User-Agentをカスタマイズ
+- `vrcapi.WithTimeout(timeout time.Duration)` - HTTPタイムアウト設定
+- `vrcapi.WithProxy(proxyURL string)` - プロキシ設定
+- オプションは shared パッケージで実装され、vrcapi で再公開される
 
 ## Key Implementation Details
 
 ### Cookie Persistence
 
-`SaveCookies()` と `LoadCookies()` は `vrchat/cookie.go` で実装:
-- Cookieを `[]CookieData` 構造体のJSON配列として保存
+`SaveCookies()` と `LoadCookies()` は `shared/cookie.go` で実装:
+- Cookieを JSON形式で保存
 - 再認証なしでセッションを維持可能
+- `vrcapi.Client` に SaveCookies() / LoadCookies() メソッドとして公開
 
 ### WebSocket Events
 
-イベント型は `Event` 構造体の `Type` フィールドで識別:
+イベント型は `shared.Event` 構造体の `Type` フィールドで識別:
 ```go
 type Event struct {
     Type    string          `json:"type"`
@@ -115,7 +124,7 @@ type Event struct {
 }
 ```
 
-主要なイベント型:
+主要なイベント型 (shared/event_types.go):
 - `notification`, `friend-online`, `friend-offline`, `friend-location`
 - `friend-add`, `friend-delete`, `user-update`
 - `group-joined`, `group-left`, `notification-v2`
@@ -126,8 +135,12 @@ type Event struct {
 
 ## Module Information
 
-- Module path: `github.com/kqnade/vrc-go`
+- Module path: `github.com/kqnade/vrcgo`
 - Go version: 1.25.5
+- Package structure:
+  - `vrcapi` - REST API クライアント
+  - `vrcws` - WebSocket クライアント
+  - `shared` - 共有型とユーティリティ
 - External dependencies:
   - `golang.org/x/net` (publicsuffix, HTTP/2サポート)
   - `github.com/gorilla/websocket` (WebSocket接続)

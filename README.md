@@ -14,7 +14,7 @@ VRChat APIの非公式Goクライアントライブラリ
 ## Installation
 
 ```bash
-go get github.com/kqnade/vrc-go
+go get github.com/kqnade/vrcgo
 ```
 
 ## Quick Start
@@ -28,17 +28,18 @@ import (
     "context"
     "log"
 
-    "github.com/kqnade/vrc-go/vrchat"
+    "github.com/kqnade/vrcgo/shared"
+    "github.com/kqnade/vrcgo/vrcapi"
 )
 
 func main() {
-    client, err := vrchat.NewClient()
+    client, err := vrcapi.NewClient()
     if err != nil {
         log.Fatal(err)
     }
 
     // 認証
-    err = client.Authenticate(context.Background(), vrchat.AuthConfig{
+    err = client.Authenticate(context.Background(), shared.AuthConfig{
         Username: "your-username",
         Password: "your-password",
     })
@@ -59,7 +60,7 @@ func main() {
 ### Cookie認証
 
 ```go
-client, _ := vrchat.NewClient()
+client, _ := vrcapi.NewClient()
 
 // Cookieを読み込み
 if err := client.LoadCookies("cookies.json"); err != nil {
@@ -76,35 +77,41 @@ if err != nil {
 ### クライアントオプション
 
 ```go
-client, err := vrchat.NewClient(
-    vrchat.WithUserAgent("my-app/1.0"),
-    vrchat.WithTimeout(30 * time.Second),
-    vrchat.WithProxy("http://proxy.example.com:8080"),
+client, err := vrcapi.NewClient(
+    vrcapi.WithUserAgent("my-app/1.0"),
+    vrcapi.WithTimeout(30 * time.Second),
+    vrcapi.WithProxy("http://proxy.example.com:8080"),
 )
 ```
 
 ### WebSocketでリアルタイムイベントを受信
 
 ```go
+import (
+    "github.com/kqnade/vrcgo/shared"
+    "github.com/kqnade/vrcgo/vrcapi"
+    "github.com/kqnade/vrcgo/vrcws"
+)
+
 // WebSocket接続
-ws, err := client.ConnectWebSocket(context.Background())
+ws, err := vrcws.New(context.Background(), client)
 if err != nil {
     log.Fatal(err)
 }
 defer ws.Close()
 
 // フレンドがオンラインになったときの処理
-ws.OnFriendOnline(func(friend vrchat.FriendOnlineEvent) {
+ws.OnFriendOnline(func(friend shared.FriendOnlineEvent) {
     log.Printf("%s is now online at %s", friend.UserID, friend.Location)
 })
 
 // 通知を受信
-ws.OnNotification(func(notification vrchat.NotificationEvent) {
+ws.OnNotification(func(notification shared.NotificationEvent) {
     log.Printf("Notification: %s", notification.Message)
 })
 
 // すべてのイベントをログ
-ws.On("*", func(event vrchat.Event) {
+ws.On("*", func(event shared.Event) {
     log.Printf("Event: %s", event.Type)
 })
 

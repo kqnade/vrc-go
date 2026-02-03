@@ -6,7 +6,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/kqnade/vrc-go/vrchat"
+	"github.com/kqnade/vrcgo/shared"
+	"github.com/kqnade/vrcgo/vrcapi"
 )
 
 func main() {
@@ -20,13 +21,13 @@ func main() {
 	}
 
 	// クライアント作成
-	client, err := vrchat.NewClient()
+	client, err := vrcapi.NewClient()
 	if err != nil {
 		log.Fatalf("Failed to create client: %v", err)
 	}
 
 	// 認証
-	err = client.Authenticate(context.Background(), vrchat.AuthConfig{
+	err = client.Authenticate(context.Background(), shared.AuthConfig{
 		Username: username,
 		Password: password,
 		TOTPCode: totpCode,

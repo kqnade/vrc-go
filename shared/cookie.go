@@ -1,9 +1,10 @@
-package vrchat
+package shared
 
 import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/http/cookiejar"
 	"net/url"
 	"os"
 )
@@ -14,13 +15,13 @@ type cookieStore struct {
 }
 
 // SaveCookies はCookieをファイルに保存します
-func (c *Client) SaveCookies(path string) error {
-	u, err := url.Parse(c.baseURL)
+func SaveCookies(jar http.CookieJar, baseURL, path string) error {
+	u, err := url.Parse(baseURL)
 	if err != nil {
 		return fmt.Errorf("failed to parse base URL: %w", err)
 	}
 
-	cookies := c.httpClient.Jar.Cookies(u)
+	cookies := jar.Cookies(u)
 	store := cookieStore{Cookies: cookies}
 
 	data, err := json.MarshalIndent(store, "", "  ")
@@ -36,7 +37,7 @@ func (c *Client) SaveCookies(path string) error {
 }
 
 // LoadCookies はCookieをファイルから読み込みます
-func (c *Client) LoadCookies(path string) error {
+func LoadCookies(jar http.CookieJar, baseURL, path string) error {
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return fmt.Errorf("failed to read cookie file: %w", err)
@@ -47,12 +48,17 @@ func (c *Client) LoadCookies(path string) error {
 		return fmt.Errorf("failed to unmarshal cookies: %w", err)
 	}
 
-	u, err := url.Parse(c.baseURL)
+	u, err := url.Parse(baseURL)
 	if err != nil {
 		return fmt.Errorf("failed to parse base URL: %w", err)
 	}
 
-	c.httpClient.Jar.SetCookies(u, store.Cookies)
+	jar.SetCookies(u, store.Cookies)
 
 	return nil
+}
+
+// NewCookieJar は新しいCookie Jarを作成します
+func NewCookieJar() (http.CookieJar, error) {
+	return cookiejar.New(&cookiejar.Options{})
 }
