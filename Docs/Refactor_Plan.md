@@ -230,9 +230,15 @@ github.com/kqnade/vrcgo/
            log.Fatal(err)
        }
 
+       username := os.Getenv("VRCHAT_USERNAME")
+       password := os.Getenv("VRCHAT_PASSWORD")
+       if username == "" || password == "" {
+           log.Fatal("VRCHAT_USERNAME and VRCHAT_PASSWORD must be set")
+       }
+
        if err := apiClient.Authenticate(ctx, vrcapi.AuthConfig{
-           Username: os.Getenv("VRCHAT_USERNAME"),
-           Password: os.Getenv("VRCHAT_PASSWORD"),
+           Username: username,
+           Password: password,
        }); err != nil {
            log.Fatal(err)
        }
@@ -313,7 +319,10 @@ github.com/kqnade/vrcgo/
            log.Fatal(err)
        }
 
-       if err := apiClient.Authenticate(ctx, vrcapi.AuthConfig{...}); err != nil {
+       if err := apiClient.Authenticate(ctx, vrcapi.AuthConfig{
+           Username: "your-username",
+           Password: "your-password",
+       }); err != nil {
            log.Fatal(err)
        }
 
