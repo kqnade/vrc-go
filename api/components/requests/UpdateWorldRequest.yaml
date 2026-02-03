@@ -1,0 +1,44 @@
+title: UpdateWorldRequest
+type: object
+properties:
+  assetUrl:
+    type: string
+    minLength: 1
+  assetVersion:
+    type: string
+    minLength: 1
+  authorId:
+    $ref: ../schemas/UserID.yaml
+  authorName:
+    type: string
+    minLength: 1
+  capacity:
+    type: integer
+    example: 8
+    maximum: 40
+    minimum: 0
+  description:
+    type: string
+  imageUrl:
+    type: string
+    minLength: 1
+  name:
+    type: string
+    minLength: 1
+  platform:
+    $ref: ../schemas/Platform.yaml
+  releaseStatus:
+    $ref: ../schemas/ReleaseStatus.yaml
+  tags:
+    type: array
+    description: " "
+    items:
+      $ref: ../schemas/Tag.yaml
+  unityPackageUrl:
+    type: string
+    minLength: 1
+  unityVersion:
+    type: string
+    default: 5.3.4p1
+    example: 2022.3.6f1
+    minLength: 1

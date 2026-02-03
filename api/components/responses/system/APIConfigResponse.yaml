@@ -1,0 +1,5 @@
+description: Returns the API's config.
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/APIConfig.yaml

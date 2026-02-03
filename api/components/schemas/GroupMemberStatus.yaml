@@ -1,0 +1,10 @@
+type: string
+enum:
+  - banned
+  - inactive
+  - invited
+  - member
+  - requested
+  - userblocked
+default: inactive
+example: member

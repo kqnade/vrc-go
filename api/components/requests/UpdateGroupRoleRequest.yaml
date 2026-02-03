@@ -1,0 +1,16 @@
+title: UpdateGroupRoleRequest
+type: object
+properties:
+  description:
+    type: string
+  isSelfAssignable:
+    type: boolean
+    default: false
+  name:
+    type: string
+  order:
+    type: integer
+  permissions:
+    type: array
+    items:
+      $ref: ../schemas/GroupPermissions.yaml

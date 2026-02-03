@@ -1,0 +1,35 @@
+title: GroupRole
+type: object
+properties:
+  createdAt:
+    type: string
+    format: date-time
+  description:
+    type: string
+  groupId:
+    $ref: ./GroupID.yaml
+  id:
+    $ref: ./GroupRoleID.yaml
+  isManagementRole:
+    type: boolean
+    default: false
+  isSelfAssignable:
+    type: boolean
+    default: false
+  name:
+    type: string
+  order:
+    type: integer
+  permissions:
+    type: array
+    items:
+      $ref: ./GroupPermissions.yaml
+  requiresPurchase:
+    type: boolean
+    default: false
+  requiresTwoFactor:
+    type: boolean
+    default: false
+  updatedAt:
+    type: string
+    format: date-time

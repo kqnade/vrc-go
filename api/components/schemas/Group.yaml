@@ -1,0 +1,98 @@
+title: Group
+type: object
+properties:
+  ageVerificationBetaCode:
+    type: string
+    example: abc1234
+  ageVerificationBetaSlots:
+    type: number
+    example: 500
+  ageVerificationSlotsAvailable:
+    type: boolean
+  allowGroupJoinPrompt:
+    type: boolean
+  badges:
+    type: array
+    items:
+      type: string
+  bannerId:
+    type: string
+    nullable: true
+  bannerUrl:
+    type: string
+    nullable: true
+  createdAt:
+    type: string
+    format: date-time
+  description:
+    type: string
+  discriminator:
+    $ref: ./GroupDiscriminator.yaml
+  galleries:
+    type: array
+    items:
+      $ref: ./GroupGallery.yaml
+  iconId:
+    type: string
+    nullable: true
+  iconUrl:
+    type: string
+    nullable: true
+  id:
+    $ref: ./GroupID.yaml
+  isVerified:
+    type: boolean
+    default: false
+  joinState:
+    $ref: ./GroupJoinState.yaml
+  languages:
+    type: array
+    items:
+      type: string
+  lastPostCreatedAt:
+    type: string
+    nullable: true
+    format: date-time
+  links:
+    type: array
+    items:
+      type: string
+  memberCount:
+    type: integer
+  memberCountSyncedAt:
+    type: string
+    format: date-time
+  membershipStatus:
+    $ref: ./GroupMemberStatus.yaml
+  myMember:
+    $ref: ./GroupMyMember.yaml
+    nullable: true
+  name:
+    type: string
+  onlineMemberCount:
+    type: integer
+  ownerId:
+    $ref: ./UserID.yaml
+  privacy:
+    $ref: ./GroupPrivacy.yaml
+  roles:
+    type: array
+    description: Only returned if ?includeRoles=true is specified.
+    nullable: true
+    items:
+      $ref: ./GroupRole.yaml
+  rules:
+    type: string
+    nullable: true
+  shortCode:
+    $ref: ./GroupShortCode.yaml
+  tags:
+    type: array
+    items:
+      $ref: ./Tag.yaml
+  transferTargetId:
+    $ref: ./UserID.yaml
+    nullable: true
+  updatedAt:
+    type: string
+    format: date-time

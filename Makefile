@@ -12,7 +12,12 @@ fetch-spec:
 .PHONY: bundle-spec
 bundle-spec:
 	@echo "Bundling OpenAPI specification..."
-	npx @apidevtools/swagger-cli bundle api/openapi.yaml -o api/openapi.bundled.yaml -t yaml
+	npx @redocly/cli bundle api/openapi.yaml -o api/openapi.bundled.yaml --ext yaml --remove-unused-components --force
+	@echo "Fixing duplicate type names..."
+	@sed -i.bak \
+		-e 's|#/components/responses/NotificationV2Response|#/components/responses/NotificationV2ApiResponse|g' \
+		-e '/^  responses:/,/^  schemas:/ s/^    NotificationV2Response:/    NotificationV2ApiResponse:/' \
+		api/openapi.bundled.yaml && rm -f api/openapi.bundled.yaml.bak
 
 .PHONY: install-tools
 install-tools:

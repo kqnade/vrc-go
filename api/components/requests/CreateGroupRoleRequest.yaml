@@ -1,0 +1,16 @@
+title: CreateGroupRequest
+type: object
+properties:
+  description:
+    type: string
+  id:
+    type: string
+  isSelfAssignable:
+    type: boolean
+    default: false
+  name:
+    type: string
+  permissions:
+    type: array
+    items:
+      $ref: ../schemas/GroupPermissions.yaml

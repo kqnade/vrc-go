@@ -1,0 +1,9 @@
+title: NotificationDetailRequestInvite
+type: object
+properties:
+  platform:
+    $ref: ./Platform.yaml
+    description: "TODO: Does this still exist?"
+  requestMessage:
+    type: string
+    description: Used when using InviteMessage Slot.

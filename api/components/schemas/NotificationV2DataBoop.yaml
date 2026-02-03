@@ -1,0 +1,7 @@
+title: NotificationV2DataBoop
+type: object
+properties:
+  boopingUserDisplayName:
+    type: string
+required:
+  - boopingUserDisplayName

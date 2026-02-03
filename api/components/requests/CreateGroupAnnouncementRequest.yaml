@@ -1,0 +1,23 @@
+title: CreateGroupAnnouncementRequest
+type: object
+properties:
+  imageId:
+    $ref: ../schemas/FileID.yaml
+  sendNotification:
+    type: boolean
+    description: Send notification to group members.
+    default: false
+    example: false
+  text:
+    type: string
+    description: Announcement text
+    example: Come join us for the event!
+    minLength: 1
+  title:
+    type: string
+    description: Announcement title
+    example: Event is starting soon!
+    minLength: 1
+required:
+  - favoriteId
+  - title

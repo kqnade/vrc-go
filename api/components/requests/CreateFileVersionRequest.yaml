@@ -1,0 +1,16 @@
+title: CreateFileVersionRequest
+type: object
+properties:
+  fileMd5:
+    type: string
+    minLength: 1
+  fileSizeInBytes:
+    type: integer
+  signatureMd5:
+    type: string
+    minLength: 1
+  signatureSizeInBytes:
+    type: integer
+required:
+  - signatureMd5
+  - signatureSizeInBytes

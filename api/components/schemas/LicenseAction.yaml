@@ -1,0 +1,7 @@
+title: LicenseAction
+type: string
+enum:
+  - have
+  - wear
+default: have
+example: have

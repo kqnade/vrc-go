@@ -1,0 +1,10 @@
+title: InstanceType
+type: string
+description: ""
+enum:
+  - friends
+  - group
+  - hidden
+  - private
+  - public
+example: hidden

@@ -1,0 +1,49 @@
+title: LimitedGroup
+type: object
+properties:
+  bannerId:
+    type: string
+    nullable: true
+  bannerUrl:
+    type: string
+    nullable: true
+  createdAt:
+    type: string
+    format: date-time
+  description:
+    type: string
+  discriminator:
+    $ref: ./GroupDiscriminator.yaml
+  galleries:
+    type: array
+    description: " "
+    items:
+      $ref: ./GroupGallery.yaml
+  iconId:
+    type: string
+    nullable: true
+  iconUrl:
+    type: string
+    nullable: true
+  id:
+    $ref: ./GroupID.yaml
+  isSearchable:
+    type: boolean
+  memberCount:
+    type: integer
+  membershipStatus:
+    $ref: ./GroupMemberStatus.yaml
+  name:
+    type: string
+  ownerId:
+    $ref: ./UserID.yaml
+  rules:
+    type: string
+    nullable: true
+  shortCode:
+    $ref: ./GroupShortCode.yaml
+  tags:
+    type: array
+    description: " "
+    items:
+      $ref: ./Tag.yaml

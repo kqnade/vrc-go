@@ -1,0 +1,108 @@
+title: CalendarEvent
+type: object
+description: "An event scheduled on a group's calendar"
+properties:
+  accessType:
+    $ref: ./CalendarEventAccess.yaml
+  category:
+    $ref: ./CalendarEventCategory.yaml
+  closeInstanceAfterEndMinutes:
+    type: integer
+  createdAt:
+    type: string
+    format: date-time
+  deletedAt:
+    type: string
+    nullable: true
+    format: date-time
+  description:
+    type: string
+  durationInMs:
+    type: integer
+  endsAt:
+    type: string
+    format: date-time
+  featured:
+    type: boolean
+  guestEarlyJoinMinutes:
+    type: integer
+  hostEarlyJoinMinutes:
+    type: integer
+  id:
+    $ref: ./CalendarID.yaml
+  imageId:
+    $ref: ./FileID.yaml
+    nullable: true
+  imageUrl:
+    type: string
+    nullable: true
+  interestedUserCount:
+    type: integer
+  isDraft:
+    type: boolean
+  languages:
+    type: array
+    description: Languages that might be spoken at this event
+    items:
+      $ref: ./LanguageCode.yaml
+  occurrenceKind:
+    type: string
+    description: So far if it exists, always the string "single"
+  ownerId:
+    $ref: ./GroupID.yaml
+  platforms:
+    type: array
+    items:
+      $ref: ./CalendarEventPlatform.yaml
+  recurrence:
+    type: string
+    description: So far unused, always "null"
+    nullable: true
+  roleIds:
+    type: array
+    description: Group roles that may join this event
+    nullable: true
+    items:
+      $ref: ./GroupRoleID.yaml
+  seriesId:
+    type: string
+    description: So far unused, always "null"
+    nullable: true
+  startsAt:
+    type: string
+    format: date-time
+  tags:
+    type: array
+    description: Custom tags for this event
+    items:
+      $ref: ./Tag.yaml
+  title:
+    type: string
+    minLength: 1
+  type:
+    type: string
+    example: event
+  updatedAt:
+    type: string
+    format: date-time
+  userInterest:
+    type: object
+    properties:
+      createdAt:
+        type: string
+        format: date-time
+      isFollowing:
+        type: boolean
+      updatedAt:
+        type: string
+        format: date-time
+  usesInstanceOverflow:
+    type: boolean
+required:
+  - accessType
+  - category
+  - description
+  - endsAt
+  - id
+  - startsAt
+  - title

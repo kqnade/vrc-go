@@ -1,0 +1,15 @@
+title: AvatarModerationCreated
+type: object
+properties:
+  avatarModerationType:
+    $ref: ./AvatarModerationType.yaml
+  created:
+    type: integer
+    description: Timestamp in milliseconds since Unix epoch
+    format: int64
+  targetAvatarId:
+    $ref: ./AvatarID.yaml
+required:
+  - avatarModerationType
+  - created
+  - targetAvatarId

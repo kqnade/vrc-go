@@ -1,0 +1,16 @@
+title: TiliaStatus
+type: object
+description: ""
+properties:
+  economyOnline:
+    type: boolean
+  economyState:
+    type: integer
+  plannedOfflineWindowEnd:
+    type: string
+    format: date-time
+  plannedOfflineWindowStart:
+    type: string
+    format: date-time
+required:
+  - economyOnline

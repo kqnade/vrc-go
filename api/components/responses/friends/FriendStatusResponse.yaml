@@ -1,0 +1,16 @@
+description: Returns a users Friend Status.
+content:
+  application/json:
+    examples:
+      Is Friend:
+        value:
+          incomingRequest: false
+          isFriend: true
+          outgoingRequest: false
+      Not Friends:
+        value:
+          incomingRequest: false
+          isFriend: true
+          outgoingRequest: false
+    schema:
+      $ref: ../../schemas/FriendStatus.yaml

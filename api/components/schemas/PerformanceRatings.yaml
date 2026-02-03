@@ -1,0 +1,11 @@
+title: PerformanceRatings
+type: string
+description: Avatar Performance ratings.
+enum:
+  - Excellent
+  - Good
+  - Medium
+  - None
+  - Poor
+  - VeryPoor
+example: Excellent

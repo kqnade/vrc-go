@@ -1,0 +1,7 @@
+title: GroupInviteAction
+type: string
+enum:
+  - accept
+  - reject
+default: accept
+example: accept

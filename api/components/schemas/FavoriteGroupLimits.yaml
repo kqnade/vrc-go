@@ -1,0 +1,16 @@
+title: FavoriteGroupLimits
+type: object
+properties:
+  avatar:
+    type: integer
+  friend:
+    type: integer
+  vrcPlusWorld:
+    type: integer
+  world:
+    type: integer
+required:
+  - avatar
+  - friend
+  - vrcPlusWorld
+  - world

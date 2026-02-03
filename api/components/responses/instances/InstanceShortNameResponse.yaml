@@ -1,0 +1,5 @@
+description: Returns an instance secureName and/or shortName.
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/InstanceShortNameResponse.yaml

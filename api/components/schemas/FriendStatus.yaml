@@ -1,0 +1,16 @@
+title: FriendStatus
+type: object
+properties:
+  incomingRequest:
+    type: boolean
+    default: false
+  isFriend:
+    type: boolean
+    default: false
+  outgoingRequest:
+    type: boolean
+    default: false
+required:
+  - incomingRequest
+  - isFriend
+  - outgoingRequest

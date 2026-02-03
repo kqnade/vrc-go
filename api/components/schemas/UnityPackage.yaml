@@ -1,0 +1,60 @@
+title: UnityPackage
+type: object
+description: ""
+properties:
+  assetUrl:
+    type: string
+    nullable: true
+    example: https://api.vrchat.cloud/api/1/file/file_cd0caa7b-69ba-4715-8dfe-7d667a9d2537/65/file
+  assetUrlObject:
+    type: object
+    example: {}
+  assetVersion:
+    type: integer
+    example: 4
+    minimum: 0
+  created_at:
+    type: string
+    example: "2020-09-10T06:13:27.777Z"
+    format: date-time
+  id:
+    $ref: ./UnityPackageID.yaml
+  impostorUrl:
+    type: string
+    nullable: true
+  impostorizerVersion:
+    type: string
+    example: 0.17.0
+  performanceRating:
+    $ref: ./PerformanceRatings.yaml
+  platform:
+    $ref: ./Platform.yaml
+  pluginUrl:
+    type: string
+    example: ""
+  pluginUrlObject:
+    type: object
+    example: {}
+  scanStatus:
+    type: string
+  unitySortNumber:
+    type: integer
+    example: 20180414000
+    format: int64
+    minimum: 0
+  unityVersion:
+    type: string
+    default: 5.3.4p1
+    example: 2022.3.6f1
+    minLength: 1
+  variant:
+    type: string
+  worldSignature:
+    type: string
+    nullable: true
+    example: AHiPAWerwCpeYrxDthF5TU2SdUWEWnm43UAn8PKRXlS8k8tVRQ==
+required:
+  - assetVersion
+  - id
+  - platform
+  - unityVersion

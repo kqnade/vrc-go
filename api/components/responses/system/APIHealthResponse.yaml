@@ -1,0 +1,11 @@
+description: Returns the API's health.
+content:
+  application/json:
+    examples:
+      Example Response:
+        value:
+          buildVersionTag: master-build-2021-06-24-fred-drakeshoot
+          ok: true
+          serverName: prod-api-green-marsh-dgt
+    schema:
+      $ref: ../../schemas/APIHealth.yaml

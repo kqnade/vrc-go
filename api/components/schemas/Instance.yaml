@@ -1,0 +1,162 @@
+title: Instance
+type: object
+description: |-
+  * `hidden` field is only present if InstanceType is `hidden` aka "Friends+", and is instance creator.
+  * `friends` field is only present if InstanceType is `friends` aka "Friends", and is instance creator.
+  * `private` field is only present if InstanceType is `private` aka "Invite" or "Invite+", and is instance creator.
+properties:
+  active:
+    type: boolean
+    default: true
+    example: true
+  ageGate:
+    type: boolean
+    nullable: true
+  calendarEntryId:
+    type: string
+    nullable: true
+  canRequestInvite:
+    type: boolean
+    default: true
+    example: true
+  capacity:
+    type: integer
+    example: 8
+    minimum: 0
+  clientNumber:
+    deprecated: true
+    type: string
+    description: Always returns "unknown".
+    minLength: 1
+  closedAt:
+    type: string
+    nullable: true
+    format: date-time
+  contentSettings:
+    $ref: ./InstanceContentSettings.yaml
+  creatorId:
+    $ref: ./UserID.yaml
+  displayName:
+    type: string
+    nullable: true
+  friends:
+    $ref: ./UserID.yaml
+  full:
+    type: boolean
+    default: false
+  gameServerVersion:
+    type: integer
+    nullable: true
+  groupAccessType:
+    $ref: ./GroupAccessType.yaml
+  hardClose:
+    type: boolean
+    nullable: true
+  hasCapacityForYou:
+    type: boolean
+  hidden:
+    $ref: ./UserID.yaml
+  id:
+    $ref: ./InstanceID.yaml
+  instanceId:
+    $ref: ./InstanceID.yaml
+  instancePersistenceEnabled:
+    type: boolean
+    nullable: true
+  location:
+    $ref: ./LocationID.yaml
+  n_users:
+    type: integer
+    example: 6
+    minimum: 0
+  name:
+    type: string
+    example: "12345"
+    minLength: 1
+  nonce:
+    type: string
+  ownerId:
+    $ref: ./InstanceOwnerId.yaml
+  permanent:
+    type: boolean
+    default: false
+  photonRegion:
+    $ref: ./Region.yaml
+  platforms:
+    $ref: ./InstancePlatforms.yaml
+  playerPersistenceEnabled:
+    type: boolean
+    nullable: true
+  private:
+    $ref: ./UserID.yaml
+  queueEnabled:
+    type: boolean
+  queueSize:
+    type: integer
+    example: 6
+    minimum: 0
+  recommendedCapacity:
+    type: integer
+    example: 6
+    minimum: 0
+  region:
+    $ref: ./InstanceRegion.yaml
+  roleRestricted:
+    type: boolean
+  secureName:
+    type: string
+    example: 7eavhhng
+    minLength: 1
+  shortName:
+    type: string
+    nullable: true
+    example: 02u7yz8j
+    minLength: 1
+  strict:
+    type: boolean
+  tags:
+    type: array
+    description: "The tags array on Instances usually contain the language tags of the people in the instance. "
+    example:
+      - language_eng
+      - language_jpn
+      - show_social_rank
+    items:
+      $ref: ./Tag.yaml
+  type:
+    $ref: ./InstanceType.yaml
+  userCount:
+    type: integer
+    example: 6
+    minimum: 0
+  users:
+    type: array
+    description: The users field is present on instances created by the requesting user.
+    items:
+      $ref: ./LimitedUserInstance.yaml
+  world:
+    $ref: ./World.yaml
+  worldId:
+    $ref: ./WorldID.yaml
+required:
+  - clientNumber
+  - full
+  - id
+  - instanceId
+  - location
+  - n_users
+  - name
+  - permanent
+  - photonRegion
+  - platforms
+  - queueEnabled
+  - queueSize
+  - recommendedCapacity
+  - region
+  - secureName
+  - strict
+  - tags
+  - type
+  - userCount
+  - world
+  - worldId

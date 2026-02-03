@@ -1,0 +1,9 @@
+title: FileStatus
+type: string
+enum:
+  - complete
+  - none
+  - queued
+  - waiting
+default: waiting
+example: complete

@@ -1,0 +1,44 @@
+title: Transaction
+type: object
+description: ""
+properties:
+  agreement:
+    $ref: ./TransactionAgreement.yaml
+  created_at:
+    type: string
+    format: date-time
+  error:
+    type: string
+    nullable: true
+  id:
+    $ref: ./TransactionID.yaml
+  isGift:
+    type: boolean
+    default: false
+  isTokens:
+    type: boolean
+    default: false
+  sandbox:
+    type: boolean
+    default: false
+  status:
+    $ref: ./TransactionStatus.yaml
+  steam:
+    $ref: ./TransactionSteamInfo.yaml
+  subscription:
+    $ref: ./Subscription.yaml
+  updated_at:
+    type: string
+    format: date-time
+  userDisplayName:
+    type: string
+  userId:
+    $ref: ./UserID.yaml
+required:
+  - created_at
+  - error
+  - id
+  - sandbox
+  - status
+  - subscription
+  - updated_at

@@ -1,0 +1,3 @@
+title: AgeVerified
+type: boolean
+description: "`true` if, user is age verified (not 18+)."

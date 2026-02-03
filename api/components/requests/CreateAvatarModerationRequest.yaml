@@ -1,0 +1,10 @@
+title: CreateAvatarModerationRequest
+type: object
+properties:
+  avatarModerationType:
+    $ref: ../schemas/AvatarModerationType.yaml
+  targetAvatarId:
+    $ref: ../schemas/AvatarID.yaml
+required:
+  - avatarModerationType
+  - targetAvatarId

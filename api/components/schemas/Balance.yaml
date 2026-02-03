@@ -1,0 +1,13 @@
+title: Balance
+type: object
+description: ""
+properties:
+  balance:
+    type: integer
+    default: 0
+  noTransactions:
+    type: boolean
+  tiliaResponse:
+    type: boolean
+required:
+  - balance

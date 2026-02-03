@@ -1,0 +1,34 @@
+title: Submission
+type: object
+description: ""
+properties:
+  contentId:
+    type: string
+    description: Either world ID or avatar ID
+    minLength: 1
+  created_at:
+    type: string
+    format: date-time
+  description:
+    type: string
+  id:
+    type: string
+    example: jsub_f01f44fa-89fa-443c-ab4c-7fed9245970f
+    minLength: 1
+  jamId:
+    type: string
+    example: jam_0b7e3f6d-4647-4648-b2a1-1431e76906d9
+    minLength: 1
+  ratingScore:
+    type: integer
+    minimum: 0
+  submitterId:
+    $ref: ../schemas/UserID.yaml
+required:
+  - contentId
+  - created_at
+  - description
+  - id
+  - jamId
+  - ratingsScore
+  - submitterId

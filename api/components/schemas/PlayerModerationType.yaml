@@ -1,0 +1,14 @@
+title: PlayerModerationType
+type: string
+enum:
+  - block
+  - hideAvatar
+  - interactOff
+  - interactOn
+  - mute
+  - muteChat
+  - showAvatar
+  - unmute
+  - unmuteChat
+default: unmute
+example: unmute

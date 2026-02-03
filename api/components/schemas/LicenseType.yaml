@@ -1,0 +1,9 @@
+title: LicenseType
+type: string
+enum:
+  - avatar
+  - licenseGroup
+  - permission
+  - product
+default: permission
+example: permission

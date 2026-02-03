@@ -9,7 +9,7 @@ generate:
   embedded-spec: false
 
 output-options:
-  skip-prune: true
+  skip-prune: false
 
 compatibility:
   always-prefix-enum-values: true

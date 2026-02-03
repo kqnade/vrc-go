@@ -1,0 +1,32 @@
+title: GroupAnnouncement
+type: object
+properties:
+  authorId:
+    $ref: ./UserID.yaml
+    nullable: true
+  createdAt:
+    type: string
+    nullable: true
+    format: date-time
+  groupId:
+    $ref: ./GroupID.yaml
+    nullable: true
+  id:
+    $ref: ./GroupAnnouncementID.yaml
+    nullable: true
+  imageId:
+    $ref: ./FileID.yaml
+    nullable: true
+  imageUrl:
+    type: string
+    nullable: true
+  text:
+    type: string
+    nullable: true
+  title:
+    type: string
+    nullable: true
+  updatedAt:
+    type: string
+    nullable: true
+    format: date-time
