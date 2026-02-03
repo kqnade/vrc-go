@@ -1,4 +1,4 @@
-package vrchat
+package shared
 
 import "fmt"
 

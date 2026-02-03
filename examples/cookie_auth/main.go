@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/kqnade/vrc-go/vrchat"
+	"github.com/kqnade/vrcgo/vrcapi"
 )
 
 func main() {
 	// クライアント作成
-	client, err := vrchat.NewClient()
+	client, err := vrcapi.NewClient()
 	if err != nil {
 		log.Fatalf("Failed to create client: %v", err)
 	}

@@ -1,52 +1,36 @@
-package vrchat
+package vrcapi
 
 import (
 	"net/http"
-	"net/url"
 	"time"
+
+	"github.com/kqnade/vrcgo/shared"
 )
 
 // Option はクライアント設定オプションです
-type Option func(*Client)
+type Option = shared.Option
 
 // WithUserAgent はUser-Agentを設定します
 func WithUserAgent(ua string) Option {
-	return func(c *Client) {
-		c.userAgent = ua
-	}
+	return shared.WithUserAgent(ua)
 }
 
 // WithProxy はプロキシを設定します
 func WithProxy(proxyURL string) Option {
-	return func(c *Client) {
-		proxy, err := url.Parse(proxyURL)
-		if err != nil {
-			return
-		}
-		transport := &http.Transport{
-			Proxy: http.ProxyURL(proxy),
-		}
-		c.httpClient.Transport = transport
-	}
+	return shared.WithProxy(proxyURL)
 }
 
 // WithTimeout はタイムアウトを設定します
 func WithTimeout(timeout time.Duration) Option {
-	return func(c *Client) {
-		c.httpClient.Timeout = timeout
-	}
+	return shared.WithTimeout(timeout)
 }
 
 // WithHTTPClient はカスタムHTTPクライアントを設定します
 func WithHTTPClient(httpClient *http.Client) Option {
-	return func(c *Client) {
-		c.httpClient = httpClient
-	}
+	return shared.WithHTTPClient(httpClient)
 }
 
 // WithBaseURL はベースURLを設定します（テスト用）
 func WithBaseURL(baseURL string) Option {
-	return func(c *Client) {
-		c.baseURL = baseURL
-	}
+	return shared.WithBaseURL(baseURL)
 }

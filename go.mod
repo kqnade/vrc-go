@@ -1,4 +1,4 @@
-module github.com/kqnade/vrc-go
+module github.com/kqnade/vrcgo
 
 go 1.25.5
 
