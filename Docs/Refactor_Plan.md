@@ -131,6 +131,8 @@ github.com/kqnade/vrcgo/
    import "github.com/kqnade/vrcgo/shared"
    ```
 
+6. `AuthConfig`（認証設定）など REST API 専用型は `vrcapi/auth.go` に定義する。
+
 ---
 
 ### フェーズ 2: vrcapi パッケージ構築（REST API）
@@ -164,7 +166,9 @@ github.com/kqnade/vrcgo/
    import "github.com/kqnade/vrcgo/shared"
    ```
 
-5. 旧 `vrchat` パッケージ内の REST 関連コードは削除する（互換性レイヤーは原則用意しない）。
+5. `WithUserAgent` など `NewClient` 用オプションは `shared/options.go` に置き、`vrcapi.NewClient` から利用する。
+
+6. 旧 `vrchat` パッケージ内の REST 関連コードは削除する（互換性レイヤーは原則用意しない）。
 
 ---
 
@@ -242,6 +246,8 @@ github.com/kqnade/vrcgo/
        }); err != nil {
            log.Fatal(err)
        }
+
+       // 認証情報はコードに直書きせず、環境変数などで安全に管理する。
 
        wsClient, err := vrcws.New(ctx, apiClient)
        if err != nil {
