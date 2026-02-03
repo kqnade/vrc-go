@@ -131,7 +131,7 @@ github.com/kqnade/vrcgo/
    import "github.com/kqnade/vrcgo/shared"
    ```
 
-6. `AuthConfig`（認証設定）など REST API 専用型は `vrcapi/auth.go` に定義する。
+6. `AuthConfig`（認証設定）など REST API 専用型はフェーズ 2 で `vrcapi/auth.go` に定義する。
 
 ---
 
@@ -331,6 +331,7 @@ github.com/kqnade/vrcgo/
    import (
        "context"
        "log"
+       "os"
 
        "github.com/kqnade/vrcgo/vrcapi"
        "github.com/kqnade/vrcgo/vrcws"
