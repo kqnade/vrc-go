@@ -160,15 +160,32 @@ github.com/kqnade/vrcgo/
    - `player_moderation.go`
    - `system.go`
 
-4. `vrcapi` 内のファイルから `shared` を参照するよう import を更新：
+4. `AuthConfig` は `vrcapi` で定義し、認証に必要なフィールドを明確にする：
+
+   ```go
+   // vrcapi/auth.go
+   type AuthConfig struct {
+       Username string
+       Password string
+   }
+   ```
+
+5. `vrcapi` 内のファイルから `shared` を参照するよう import を更新：
 
    ```go
    import "github.com/kqnade/vrcgo/shared"
    ```
 
-5. `WithUserAgent` など `NewClient` 用オプションは `shared/options.go` に置き、`vrcapi.NewClient` から利用する。
+6. `WithUserAgent` など `NewClient` 用オプションは `shared/options.go` に置き、`vrcapi` 側で再公開する：
 
-6. 旧 `vrchat` パッケージ内の REST 関連コードは削除する（互換性レイヤーは原則用意しない）。
+   ```go
+   // vrcapi/options.go
+   func WithUserAgent(ua string) shared.Option {
+       return shared.WithUserAgent(ua)
+   }
+   ```
+
+7. 旧 `vrchat` パッケージ内の REST 関連コードは削除する（互換性レイヤーは原則用意しない）。
 
 ---
 
