@@ -23,7 +23,7 @@ type CurrentUser struct {
 	StatusDescription       string   `json:"statusDescription"`
 	CurrentAvatar           string   `json:"currentAvatar"`
 	CurrentAvatarThumbnail  string   `json:"currentAvatarImageUrl"`
-	RequiresTwoFactorAuth   *bool    `json:"requiresTwoFactorAuth,omitempty"`
+	RequiresTwoFactorAuth   []string `json:"requiresTwoFactorAuth,omitempty"`
 	EmailVerified           bool     `json:"emailVerified"`
 	HasBirthday             bool     `json:"hasBirthday"`
 	HasEmail                bool     `json:"hasEmail"`
@@ -77,9 +77,9 @@ func (c *Client) Authenticate(ctx context.Context, config AuthConfig) error {
 	}
 
 	// 2FA必要チェック
-	if user.RequiresTwoFactorAuth != nil && *user.RequiresTwoFactorAuth {
+	if len(user.RequiresTwoFactorAuth) > 0 {
 		if config.TOTPCode == "" {
-			return fmt.Errorf("two-factor authentication required but TOTP code not provided")
+			return fmt.Errorf("two-factor authentication required (methods: %v) but TOTP code not provided", user.RequiresTwoFactorAuth)
 		}
 		return c.verifyTwoFactor(ctx, config.TOTPCode)
 	}
