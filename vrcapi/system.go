@@ -20,13 +20,17 @@ func (c *Client) GetConfig(ctx context.Context) (*shared.Config, error) {
 // GetTime は現在のAPIサーバー時刻を取得します
 func (c *Client) GetTime(ctx context.Context) (string, error) {
 	var response struct {
-		Time string `json:"time"`
+		Time       string `json:"time"`
+		ServerTime string `json:"serverTime"`
 	}
 	err := c.doRequest(ctx, "GET", "/time", nil, &response)
 	if err != nil {
 		return "", fmt.Errorf("failed to get time: %w", err)
 	}
-	return response.Time, nil
+	if response.Time != "" {
+		return response.Time, nil
+	}
+	return response.ServerTime, nil
 }
 
 // GetHealth はAPIヘルスチェックを行います
