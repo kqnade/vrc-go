@@ -14,7 +14,7 @@ VRChat APIの非公式Goクライアントライブラリ
 ## Installation
 
 ```bash
-go get k4na.de/vrc-go
+go get github.com/kqnade/vrc-go
 ```
 
 ## Quick Start
@@ -28,7 +28,7 @@ import (
     "context"
     "log"
 
-    "k4na.de/vrc-go/vrchat"
+    "github.com/kqnade/vrc-go/vrchat"
 )
 
 func main() {

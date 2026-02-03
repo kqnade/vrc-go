@@ -1,7 +1,8 @@
-module k4na.de/vrc-go
+module github.com/kqnade/vrc-go
 
 go 1.25.5
 
-require golang.org/x/net v0.49.0
-
-require github.com/gorilla/websocket v1.5.3 // indirect
+require (
+	github.com/gorilla/websocket v1.5.3
+	golang.org/x/net v0.49.0
+)

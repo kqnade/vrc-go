@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"k4na.de/vrc-go/vrchat"
+	"github.com/kqnade/vrc-go/vrchat"
 )
 
 func main() {

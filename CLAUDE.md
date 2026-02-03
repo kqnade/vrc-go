@@ -126,7 +126,7 @@ type Event struct {
 
 ## Module Information
 
-- Module path: `k4na.de/vrc-go`
+- Module path: `github.com/kqnade/vrc-go`
 - Go version: 1.25.5
 - External dependencies:
   - `golang.org/x/net` (publicsuffix, HTTP/2サポート)
