@@ -3,17 +3,19 @@ package vrcapi
 import (
 	"context"
 	"fmt"
+	"net/url"
+	"strconv"
 
 	"github.com/kqnade/vrcgo/shared"
 )
 
 // AddFavorite はお気に入りに追加します
-func (c *Client) AddFavorite(ctx context.Context, favoriteType, favoriteID, tags string) (*shared.Favorite, error) {
+func (c *Client) AddFavorite(ctx context.Context, favoriteType, favoriteID string, tags []string) (*shared.Favorite, error) {
 	var favorite shared.Favorite
 	req := struct {
-		Type       string `json:"type"`
-		FavoriteID string `json:"favoriteId"`
-		Tags       string `json:"tags"`
+		Type       string   `json:"type"`
+		FavoriteID string   `json:"favoriteId"`
+		Tags       []string `json:"tags"`
 	}{
 		Type:       favoriteType,
 		FavoriteID: favoriteID,
@@ -38,13 +40,16 @@ func (c *Client) RemoveFavorite(ctx context.Context, favoriteID string) error {
 // GetFavorites はお気に入りのリストを取得します
 func (c *Client) GetFavorites(ctx context.Context, n, offset int, favoriteType, tag string) ([]shared.Favorite, error) {
 	var favorites []shared.Favorite
-	path := fmt.Sprintf("/favorites?n=%d&offset=%d", n, offset)
+	params := url.Values{}
+	params.Set("n", strconv.Itoa(n))
+	params.Set("offset", strconv.Itoa(offset))
 	if favoriteType != "" {
-		path += "&type=" + favoriteType
+		params.Set("type", favoriteType)
 	}
 	if tag != "" {
-		path += "&tag=" + tag
+		params.Set("tag", tag)
 	}
+	path := "/favorites?" + params.Encode()
 	err := c.doRequest(ctx, "GET", path, nil, &favorites)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get favorites: %w", err)
@@ -55,10 +60,13 @@ func (c *Client) GetFavorites(ctx context.Context, n, offset int, favoriteType, 
 // GetFavoriteGroups はお気に入りグループのリストを取得します
 func (c *Client) GetFavoriteGroups(ctx context.Context, n, offset int, ownerID string) ([]shared.FavoriteGroup, error) {
 	var groups []shared.FavoriteGroup
-	path := fmt.Sprintf("/favorite/groups?n=%d&offset=%d", n, offset)
+	params := url.Values{}
+	params.Set("n", strconv.Itoa(n))
+	params.Set("offset", strconv.Itoa(offset))
 	if ownerID != "" {
-		path += "&ownerId=" + ownerID
+		params.Set("ownerId", ownerID)
 	}
+	path := "/favorite/groups?" + params.Encode()
 	err := c.doRequest(ctx, "GET", path, nil, &groups)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get favorite groups: %w", err)

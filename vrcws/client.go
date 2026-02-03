@@ -28,6 +28,7 @@ const (
 // Client はWebSocket接続を管理します
 type Client struct {
 	conn         *websocket.Conn
+	connMux      sync.Mutex
 	handlers     map[string][]shared.EventHandler
 	handlersMux  sync.RWMutex
 	done         chan struct{}
@@ -84,7 +85,9 @@ func (ws *Client) connect() error {
 		return fmt.Errorf("failed to connect websocket: %w", err)
 	}
 
+	ws.connMux.Lock()
 	ws.conn = conn
+	ws.connMux.Unlock()
 	return nil
 }
 
@@ -101,7 +104,11 @@ func (ws *Client) readLoop() {
 		default:
 		}
 
-		if ws.conn == nil {
+		ws.connMux.Lock()
+		conn := ws.conn
+		ws.connMux.Unlock()
+
+		if conn == nil {
 			if !ws.reconnect {
 				return
 			}
@@ -117,16 +124,19 @@ func (ws *Client) readLoop() {
 				continue
 			}
 			currentDelay = reconnectDelay // 接続成功時にリセット
+			continue
 		}
 
 		var event shared.Event
-		err := ws.conn.ReadJSON(&event)
+		err := conn.ReadJSON(&event)
 		if err != nil {
 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
 				// 予期しない切断
 			}
-			ws.conn.Close()
+			conn.Close()
+			ws.connMux.Lock()
 			ws.conn = nil
+			ws.connMux.Unlock()
 			continue
 		}
 
@@ -304,14 +314,18 @@ func (ws *Client) Close() error {
 	ws.reconnect = false
 	ws.cancel()
 
-	if ws.conn != nil {
-		err := ws.conn.WriteMessage(websocket.CloseMessage, websocket.FormatCloseMessage(websocket.CloseNormalClosure, ""))
+	ws.connMux.Lock()
+	conn := ws.conn
+	ws.connMux.Unlock()
+
+	if conn != nil {
+		err := conn.WriteMessage(websocket.CloseMessage, websocket.FormatCloseMessage(websocket.CloseNormalClosure, ""))
 		if err != nil {
 			return err
 		}
 
 		<-ws.done
-		return ws.conn.Close()
+		return conn.Close()
 	}
 
 	<-ws.done

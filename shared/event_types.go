@@ -94,8 +94,8 @@ type GroupLeftEvent struct {
 	GroupID string `json:"groupId"`
 }
 
-// GroupAnnoucementEvent はグループお知らせイベントです
-type GroupAnnoucementEvent struct {
+// GroupAnnouncementEvent はグループお知らせイベントです
+type GroupAnnouncementEvent struct {
 	GroupID      string              `json:"groupId"`
 	Announcement *GroupAnnouncement  `json:"announcement,omitempty"`
 }

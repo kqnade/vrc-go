@@ -3,6 +3,8 @@ package vrcapi
 import (
 	"context"
 	"fmt"
+	"net/url"
+	"strconv"
 
 	"github.com/kqnade/vrcgo/shared"
 )
@@ -20,7 +22,11 @@ func (c *Client) GetGroup(ctx context.Context, groupID string) (*shared.Group, e
 // SearchGroups はグループを検索します
 func (c *Client) SearchGroups(ctx context.Context, query string, n, offset int) ([]shared.Group, error) {
 	var groups []shared.Group
-	path := fmt.Sprintf("/groups?query=%s&n=%d&offset=%d", query, n, offset)
+	params := url.Values{}
+	params.Set("query", query)
+	params.Set("n", strconv.Itoa(n))
+	params.Set("offset", strconv.Itoa(offset))
+	path := "/groups?" + params.Encode()
 	err := c.doRequest(ctx, "GET", path, nil, &groups)
 	if err != nil {
 		return nil, fmt.Errorf("failed to search groups: %w", err)

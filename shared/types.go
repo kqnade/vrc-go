@@ -571,6 +571,13 @@ type CreateInstanceRequest struct {
 	CanRequestInvite bool   `json:"canRequestInvite,omitempty"`
 }
 
+// UpdateInstanceRequest はインスタンス更新リクエストです
+type UpdateInstanceRequest struct {
+	Hardclose        *bool   `json:"hardclose,omitempty"`
+	CanRequestInvite *bool   `json:"canRequestInvite,omitempty"`
+	Region           *string `json:"region,omitempty"`
+}
+
 // SendNotificationRequest は通知送信リクエストです
 type SendNotificationRequest struct {
 	Type       string                 `json:"type"`

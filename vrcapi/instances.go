@@ -61,7 +61,7 @@ func (c *Client) CreateInstance(ctx context.Context, req shared.CreateInstanceRe
 }
 
 // UpdateInstance はインスタンスを更新します
-func (c *Client) UpdateInstance(ctx context.Context, worldID, instanceID string, req interface{}) (*shared.Instance, error) {
+func (c *Client) UpdateInstance(ctx context.Context, worldID, instanceID string, req shared.UpdateInstanceRequest) (*shared.Instance, error) {
 	var instance shared.Instance
 	err := c.doRequest(ctx, "PUT", "/instances/"+worldID+":"+instanceID, req, &instance)
 	if err != nil {
