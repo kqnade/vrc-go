@@ -1,5 +1,0 @@
-description: Returns a Service Queue Stats.
-content:
-  application/json:
-    schema:
-      $ref: ../../schemas/ServiceQueueStats.yaml

@@ -1,9 +1,0 @@
-title: InviteMessageType
-type: string
-description: ""
-enum:
-  - message
-  - request
-  - requestResponse
-  - response
-default: message

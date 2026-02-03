@@ -1,9 +1,0 @@
-title: ReleaseStatus
-type: string
-enum:
-  - all
-  - hidden
-  - private
-  - public
-default: public
-example: public

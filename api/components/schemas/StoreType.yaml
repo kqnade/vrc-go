@@ -1,7 +1,0 @@
-title: StoreType
-type: string
-enum:
-  - group
-  - house
-  - world
-default: group

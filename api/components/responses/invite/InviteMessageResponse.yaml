@@ -1,5 +1,0 @@
-description: Returns a single InviteMessage object.
-content:
-  application/json:
-    schema:
-      $ref: ../../schemas/InviteMessage.yaml

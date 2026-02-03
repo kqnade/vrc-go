@@ -1,5 +1,0 @@
-description: Returns a single ModerationReport object.
-content:
-  application/json:
-    schema:
-      $ref: ../../schemas/ModerationReport.yaml

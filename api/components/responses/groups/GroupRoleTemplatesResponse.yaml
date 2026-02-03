@@ -1,7 +1,0 @@
-description: Returns a dictionary of GroupRoleTemplate objects.
-content:
-  application/json:
-    schema:
-      type: object
-      additionalProperties:
-        $ref: ../../schemas/GroupRoleTemplateValues.yaml

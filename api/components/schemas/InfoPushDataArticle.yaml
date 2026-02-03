@@ -1,5 +1,0 @@
-title: InfoPushDataArticle
-type: object
-properties:
-  content:
-    $ref: ./InfoPushDataArticleContent.yaml

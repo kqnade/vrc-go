@@ -1,7 +1,0 @@
-title: FavoriteType
-type: string
-enum:
-  - avatar
-  - friend
-  - world
-default: friend

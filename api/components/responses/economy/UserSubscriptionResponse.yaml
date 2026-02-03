@@ -1,5 +1,0 @@
-description: Returns a UserSubscription object.
-content:
-  application/json:
-    schema:
-      $ref: ../../schemas/UserSubscription.yaml

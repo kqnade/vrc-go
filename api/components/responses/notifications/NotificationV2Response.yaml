@@ -1,5 +1,0 @@
-description: Returns a single NotifcationV2 object.
-content:
-  application/json:
-    schema:
-      $ref: ../../schemas/NotificationV2.yaml

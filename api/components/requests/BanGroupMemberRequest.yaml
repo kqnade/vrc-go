@@ -1,7 +1,0 @@
-title: BanGroupMemberRequest
-type: object
-properties:
-  userId:
-    $ref: ../schemas/UserID.yaml
-required:
-  - userId

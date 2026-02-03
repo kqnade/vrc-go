@@ -1,6 +1,0 @@
-title: GroupSearchSort
-type: string
-enum:
-  - joinedAt:asc
-  - joinedAt:desc
-example: joinedAt:asc

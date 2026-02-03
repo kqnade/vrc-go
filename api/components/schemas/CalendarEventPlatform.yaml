@@ -1,6 +1,0 @@
-title: CalendarEventPlatform
-type: string
-enum:
-  - android
-  - ios
-  - standalonewindows

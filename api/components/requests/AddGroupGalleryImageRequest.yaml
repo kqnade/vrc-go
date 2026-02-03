@@ -1,7 +1,0 @@
-title: AddGroupGalleryImageRequest
-type: object
-properties:
-  fileId:
-    $ref: ../schemas/FileID.yaml
-required:
-  - fileId

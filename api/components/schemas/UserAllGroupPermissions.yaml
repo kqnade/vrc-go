@@ -1,7 +1,0 @@
-title: UserAllGroupPermissions
-type: object
-description: Map from GroupIDs to an array of the GroupPermissions the user has in that group.
-additionalProperties:
-  type: array
-  items:
-    $ref: ./GroupPermissions.yaml

@@ -1,8 +1,0 @@
-title: ProductType
-type: string
-enum:
-  - inventory
-  - listing
-  - role
-  - udon
-default: udon

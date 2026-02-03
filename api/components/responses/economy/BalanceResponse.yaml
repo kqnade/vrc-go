@@ -1,5 +1,0 @@
-description: Returns a single Balance object.
-content:
-  application/json:
-    schema:
-      $ref: ../../schemas/Balance.yaml

@@ -1,5 +1,0 @@
-description: Returns a single Transaction object.
-content:
-  application/json:
-    schema:
-      $ref: ../../schemas/Transaction.yaml

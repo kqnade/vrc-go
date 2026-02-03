@@ -1,8 +1,0 @@
-title: CalendarEventDiscoveryScope
-type: string
-enum:
-  - all
-  - live
-  - upcoming
-default: upcoming
-example: upcoming

@@ -1,7 +1,0 @@
-title: UpdateTiliaTOSRequest
-type: object
-properties:
-  accepted:
-    type: boolean
-required:
-  - accepted

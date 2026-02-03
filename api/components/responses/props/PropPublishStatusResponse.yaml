@@ -1,5 +1,0 @@
-description: Returns a single PropPublishStatus object.
-content:
-  application/json:
-    schema:
-      $ref: ../../schemas/PropPublishStatus.yaml

@@ -1,5 +1,0 @@
-description: Returns a single LimitedBadge object.
-content:
-  application/json:
-    schema:
-      $ref: ../../schemas/LimitedBadge.yaml

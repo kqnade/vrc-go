@@ -1,9 +1,0 @@
-title: InviteResponse
-type: object
-properties:
-  responseSlot:
-    type: integer
-    maximum: 11
-    minimum: 0
-required:
-  - responseSlot

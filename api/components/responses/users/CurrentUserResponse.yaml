@@ -1,5 +1,0 @@
-description: Returns a single CurrentUser object.
-content:
-  application/json:
-    schema:
-      $ref: ../../schemas/CurrentUser.yaml

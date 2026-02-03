@@ -1,8 +1,0 @@
-title: GroupJoinState
-type: string
-enum:
-  - closed
-  - invite
-  - open
-  - request
-default: open

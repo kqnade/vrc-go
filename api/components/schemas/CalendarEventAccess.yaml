@@ -1,8 +1,0 @@
-title: CalendarEventAccess
-type: string
-description: Who the event is for
-enum:
-  - group
-  - public
-default: public
-example: group

@@ -1,5 +1,0 @@
-description: Returns a single AvatarModerationCreated object
-content:
-  application/json:
-    schema:
-      $ref: ../../schemas/AvatarModerationCreated.yaml

@@ -1,5 +1,0 @@
-description: Returns a single GroupGallery object.
-content:
-  application/json:
-    schema:
-      $ref: ../../schemas/GroupGallery.yaml

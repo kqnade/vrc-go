@@ -1,5 +1,0 @@
-description: Returns a single Permission object.
-content:
-  application/json:
-    schema:
-      $ref: ../../schemas/Permission.yaml

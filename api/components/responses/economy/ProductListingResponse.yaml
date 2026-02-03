@@ -1,5 +1,0 @@
-description: Returns a single ProductListing object.
-content:
-  application/json:
-    schema:
-      $ref: ../../schemas/ProductListing.yaml

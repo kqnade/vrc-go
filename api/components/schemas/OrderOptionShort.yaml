@@ -1,7 +1,0 @@
-title: OrderOptionShort
-type: string
-enum:
-  - asc
-  - desc
-default: desc
-example: desc

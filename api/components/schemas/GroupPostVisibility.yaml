@@ -1,6 +1,0 @@
-title: GroupPostVisibility
-type: string
-enum:
-  - group
-  - public
-example: public

@@ -1,9 +1,0 @@
-title: PerformanceLimiterInfo
-type: object
-description: Info about the performance limits on a platform
-properties:
-  maxSeats:
-    type: integer
-    description: Maximum amount of seats. -1 means no limit.
-required:
-  - maxSeats

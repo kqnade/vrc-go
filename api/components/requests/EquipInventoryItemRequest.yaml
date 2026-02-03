@@ -1,7 +1,0 @@
-title: EquipInventoryItemRequest
-type: object
-properties:
-  equipSlot:
-    $ref: ../schemas/InventoryEquipSlot.yaml
-required:
-  - equipSlot

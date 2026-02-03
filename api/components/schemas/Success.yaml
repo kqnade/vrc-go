@@ -1,5 +1,0 @@
-title: Success
-type: object
-properties:
-  success:
-    $ref: ./Response.yaml

@@ -1,8 +1,0 @@
-title: ServiceQueueStats
-type: object
-description: "Statistics about the user's currently queued service request"
-properties:
-  estimatedServiceDurationSeconds:
-    type: integer
-required:
-  - estimatedServiceDurationSeconds

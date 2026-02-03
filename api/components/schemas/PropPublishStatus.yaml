@@ -1,6 +1,0 @@
-title: PropPublishStatus
-type: object
-properties:
-  canPublish:
-    type: boolean
-    default: false

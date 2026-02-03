@@ -1,9 +1,0 @@
-title: NotificationV2ResponseIcon
-type: string
-example: >
-  Bell:
-    value: bell
-  Bell Slash:
-    value: bell-slash
-  Check:
-    value: check

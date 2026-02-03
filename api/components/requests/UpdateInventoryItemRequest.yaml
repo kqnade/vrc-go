@@ -1,9 +1,0 @@
-title: UpdateInventoryItemRequest
-type: object
-properties:
-  isArchived:
-    type: boolean
-  isSeen:
-    type: boolean
-  userAttributes:
-    $ref: ../schemas/InventoryUserAttributes.yaml

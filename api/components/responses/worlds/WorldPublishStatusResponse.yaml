@@ -1,5 +1,0 @@
-description: Returns a single WorldPublishStatus object.
-content:
-  application/json:
-    schema:
-      $ref: ../../schemas/WorldPublishStatus.yaml

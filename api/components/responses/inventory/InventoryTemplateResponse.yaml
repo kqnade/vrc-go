@@ -1,5 +1,0 @@
-description: Returns an InventoryTemplate object.
-content:
-  application/json:
-    schema:
-      $ref: ../../schemas/InventoryTemplate.yaml

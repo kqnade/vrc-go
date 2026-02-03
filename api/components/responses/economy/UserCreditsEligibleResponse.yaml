@@ -1,5 +1,0 @@
-description: Returns a single UserCreditsEligible object.
-content:
-  application/json:
-    schema:
-      $ref: ../../schemas/UserCreditsEligible.yaml

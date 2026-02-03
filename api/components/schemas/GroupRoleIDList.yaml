@@ -1,5 +1,0 @@
-title: GroupRoleIDList
-type: array
-description: " "
-items:
-  $ref: ./GroupRoleID.yaml

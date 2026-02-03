@@ -23,9 +23,9 @@ go.work.sum
 *.swo
 *~
 
-# Credentials
+# Credentials and session data
 cookies.json
 .env
 
-# Temporary
-api/openapi.bundled.yaml
+# Examples output
+examples/*/cookies.json

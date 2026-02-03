@@ -1,5 +1,0 @@
-description: Returns a list of GroupRoleID objects.
-content:
-  application/json:
-    schema:
-      $ref: ../../schemas/GroupRoleIDList.yaml
