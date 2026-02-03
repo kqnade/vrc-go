@@ -296,6 +296,7 @@ github.com/kqnade/vrcgo/
    import (
        "context"
        "log"
+       "os"
 
        "github.com/kqnade/vrcgo/vrcapi"
    )
