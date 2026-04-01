@@ -3,6 +3,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: 'vrc-go',
   description: 'VRChat API unofficial Go client library',
+  base: '/vrcgo/',
 
   locales: {
     root: {
