@@ -1,7 +1,6 @@
 ---
 layout: home
 title: vrc-go
-
 hero:
   name: vrc-go
   text: VRChat API Go Client
